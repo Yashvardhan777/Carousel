@@ -1,83 +1,117 @@
 import React, { useRef, useState } from 'react';
-import { View, FlatList, Animated, Image, Text, PanResponder, Dimensions } from 'react-native';
+import { FlatList, Text, ImageBackground, Dimensions, Animated, StyleSheet } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('screen');
 
-const IMAGES = [
-  'https://unsplash.com/photos/a-blue-and-green-background-with-wavy-lines-CXCI9qS96Cw',
-  'https://unsplash.com/photos/a-car-parked-on-the-side-of-a-street-next-to-a-tall-building-sjSzS3M-LLM',
-  'https://unsplash.com/photos/a-black-sheep-standing-on-top-of-a-lush-green-field-1GRm2Kdwykc',
-];
+import { DATA } from './CarouselComponent.sample';
 
 const CarouselComponent = () => {
-  const flatListRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewableItems, setViewableItems] = useState([]);
+  const animations = useRef({});
+  const hasAnimated = useRef({}); // Keep track of which items have animated
 
-  // Handle Swipe Gestures
-  // const panResponder = useRef(
-  //   PanResponder.create({
-  //     onMoveShouldSetPanResponder: (_, gesture) =>
-  //       Math.abs(gesture.dy) > 10, // Detect vertical swipe
-  //     onPanResponderRelease: (_, gesture) => {
-  //       if (gesture.dy > 50 && currentIndex > 0) {
-  //         scrollToIndex(currentIndex - 1); // Swipe down
-  //       } else if (gesture.dy < -50 && currentIndex < IMAGES.length - 1) {
-  //         scrollToIndex(currentIndex + 1); // Swipe up
-  //       }
-  //     },
-  //   })
-  // ).current;
-
-  // Function to manually scroll
-  const scrollToIndex = index => {
-    setCurrentIndex(index);
-    flatListRef.current?.scrollToOffset({ offset: index * height, animated: true });
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    setViewableItems(viewableItems.map(v => v.index));
   };
 
-  // Render each item with animation
-  const renderItem = ({ item }) => {
-    // const fadeAnim = useRef(new Animated.Value(0)).current;
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+    minimumViewableItems: 5,
+  };
 
-    // const onLoad = () => {
-    //   Animated.timing(fadeAnim, {
-    //     toValue: 1,
-    //     duration: 500,
-    //     useNativeDriver: true,
-    //   }).start();
-    // };
-    console.log({ item })
+  const getItemLayout = (_, index) => ({ length: height, offset: height * index, index });
+
+  const renderItem = ({ item, index }) => {
+    const { imageUrl, title, body } = item;
+
+    if (!animations.current[index]) {
+      animations.current[index] = new Animated.Value(0);
+    }
+
+    const opacity = animations.current[index].interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, 1],
+    });
+
+    const translateY = animations.current[index].interpolate({
+      inputRange: [0, 1],
+      outputRange: [10, -250],
+    });
+
+    // *** Key Change: Check hasAnimated before animating ***
+    if (viewableItems.includes(index) && !hasAnimated.current[index]) {
+      hasAnimated.current[index] = true; // Mark as animated
+
+      Animated.sequence([
+        Animated.delay(500),
+        Animated.spring(animations.current[index], {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+          stiffness: 50, // Controls the "tightness" of the spring (lower = slower)
+          damping: 20, // Controls how quickly the spring settles (higher = slower)
+          mass: 2,
+        }),
+      ]).start();
+    }
+
     return (
-      <View style={{ height, width, justifyContent: 'center', alignItems: 'center' }}>
-        <Image
-          source={{ uri: item }}
-          style={{
-            height: height * 0.9,
-            width: width * 0.9,
-            borderRadius: 10,
-            // opacity: fadeAnim,
-          }}
-          // onLoad={onLoad}
-        />
-      </View>
+      <ImageBackground
+        source={imageUrl}
+        style={styles.imageBackground}>
+        <Animated.View style={[styles.textContainer, { opacity, transform: [{ translateY }] }]}>
+          <Text style={styles.title}>{title}</Text>
+          <Text
+            style={styles.body}
+            numberOfLines={2}>
+            {body}
+          </Text>
+        </Animated.View>
+      </ImageBackground>
     );
   };
 
   return (
     <FlatList
-      ref={flatListRef}
-      data={IMAGES}
-      keyExtractor={(_, index) => index.toString()}
+      data={DATA}
       renderItem={renderItem}
-      // pagingEnabled
-      // scrollEnabled={false} // Disable default scrolling
+      initialNumToRender={1}
+      keyExtractor={(_, index) => index.toString()}
+      horizontal={false}
       showsVerticalScrollIndicator={false}
-      // getItemLayout={(_, index) => ({
-      //   length: height,
-      //   offset: height * index,
-      //   index,
-      // })}
+      snapToInterval={height}
+      decelerationRate="fast"
+      pagingEnabled
+      onViewableItemsChanged={onViewableItemsChanged}
+      viewabilityConfig={viewabilityConfig}
+      getItemLayout={getItemLayout}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  imageBackground: {
+    width: width,
+    height: height,
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+  },
+  textContainer: {
+    // Styles for the container of the title and body text
+    alignItems: 'center', // Center text horizontally
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black', // Example color
+    marginBottom: 10, // Space between title and body
+  },
+  body: {
+    fontSize: 16,
+    color: 'black', // Example color
+    textAlign: 'center', // Center text horizontally
+    paddingHorizontal: 20, // Add some horizontal padding
+  },
+});
 
 export default CarouselComponent;

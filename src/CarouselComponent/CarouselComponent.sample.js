@@ -6,7 +6,7 @@ export const DATA = [
     theme: 'DARK',
   },
   {
-    imageUrl: require('./assets/light.jpg'),
+    imageUrl: require('./assets/light.gif'),
     title: 'Title Text',
     body: 'A very long body text aka description',
     theme: 'LIGHT',

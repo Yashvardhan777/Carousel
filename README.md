@@ -42,8 +42,7 @@ This project is a **smooth, high-performance vertical carousel** built in **Reac
 -> **Vertical Carousel** – A seamless, smooth-scrolling vertical list.  
 -> **Supports GIFs and Image Backgrounds** – Each card can have different media types.  
 -> **Dynamic CTA Themes** – The CTA style changes based on the card config.  
--> **Animated Text Appearance** – Text elements animate when they appear for the first time.  
--> **Optimized Performance** – Efficient handling of media to ensure smooth scrolling.  
+-> **Animated Text Appearance** – Text elements animate when they appear for the first time.
 
 ---
 

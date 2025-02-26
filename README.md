@@ -1,50 +1,66 @@
-# Welcome to your Expo app 👋
+## Vertical Carousel (React Native)  
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### Overview  
+This project is a **smooth, high-performance vertical carousel** built in **React Native**. Each card in the carousel supports **gifs and images as backgrounds**. The Call-to-Action (CTA) elements dynamically change themes, and text animations enhance user experience.  
 
-## Get started
+---
 
-1. Install dependencies
+## **Setup & Installation**  
 
-   ```bash
+### **Prerequisites**  
+- Node.js (>=16.x)  
+- React Native CLI  
+- Xcode (for iOS) / Android Studio (for Android)  
+
+### **Steps to Run the Project**  
+1. **Clone the Repository**  
+   ```sh
+   git clone https://github.com/Yashvardhan777/Carousel.git
+   cd Carousel
+   ```
+
+2. **Install Dependencies**  
+   ```sh
    npm install
    ```
 
-2. Start the app
-
-   ```bash
-    npx expo start
+3. **Run on iOS**  
+   ```sh
+   cd ios && pod install && cd ..
+   npx react-native run-ios
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on Android**  
+   ```sh
+   npx react-native run-android
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## **Features Implemented**  
 
-## Get a fresh project
+-> **Vertical Carousel** – A seamless, smooth-scrolling vertical list.  
+-> **Supports GIFs and Image Backgrounds** – Each card can have different media types.  
+-> **Dynamic CTA Themes** – The CTA style changes based on the card config.  
+-> **Animated Text Appearance** – Text elements animate when they appear for the first time.  
+-> **Optimized Performance** – Efficient handling of media to ensure smooth scrolling.  
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## **Trade-offs & Challenges Faced**
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### **Used Expo for development**
+- **Issue:** Time for development was limited
+- **Solution:** Used Expo to seamlessly begin development as it provides initial working templates.
 
-## Learn more
+### **Animations Without Third-Party Libraries**  
+- **Issue:** No external animation libraries were allowed, making animations trickier.  
+- **Solution:** Used React Native’s built-in `Animated` API to handle smooth transitions.  
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## **Future Improvements**  
+- Implement lazy-loading for videos and Image Caching for images to further optimize memory.  
+- Add gesture-based navigation for a more interactive feel.  
+- Enhance animations with more fluid effects.
+- To use flex and dynamic styling

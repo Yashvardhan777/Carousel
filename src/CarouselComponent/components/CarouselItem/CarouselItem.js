@@ -82,21 +82,21 @@ const CarouselItem = ({ item, index, animations, hasAnimated, viewableItems }) =
   );
 
   const renderHeaderCTAs = () => (
-    <View style={{ width: '80%', flexDirection: 'row', justifyContent: 'space-between', bottom: 250 }}>
+    <View style={styles.headerCTAContainer}>
       <AntDesign
         name="arrowup"
         size={24}
         color={color}
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '20%', marginLeft: 20 }}>
-        <View style={{ backgroundColor: 'grey', padding: 12, bottom: 10, right: 5 }}>
+      <View style={styles.headerRightHandContainer}>
+        <View style={[styles.headerRightHandBtns, styles.speakerCTA]}>
           <MaterialCommunityIcons
             name="speaker"
             size={24}
             color={color}
           />
         </View>
-        <View style={{ backgroundColor: 'grey', padding: 12, bottom: 10 }}>
+        <View style={styles.headerRightHandBtns}>
           <AntDesign
             name="setting"
             size={24}
@@ -108,8 +108,8 @@ const CarouselItem = ({ item, index, animations, hasAnimated, viewableItems }) =
   );
 
   const renderFooterCTAs = () => (
-    <View style={{ width: '80%', flexDirection: 'row', justifyContent: 'space-between', top: 250 }}>
-      <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'space-between' }}>
+    <View style={styles.footerCTAContainer}>
+      <View style={styles.footerCTABtnContainer}>
         <AntDesign
           name="hearto"
           size={24}
@@ -117,7 +117,7 @@ const CarouselItem = ({ item, index, animations, hasAnimated, viewableItems }) =
         />
         <Text style={styles.likeCTA}>Like</Text>
       </View>
-      <View style={{ width: '20%', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={styles.footerCTABtnContainer}>
         <Octicons
           name="share"
           size={24}

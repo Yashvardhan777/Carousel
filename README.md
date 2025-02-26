@@ -62,4 +62,4 @@ This project is a **smooth, high-performance vertical carousel** built in **Reac
 - Implement lazy-loading for videos and Image Caching for images to further optimize memory.  
 - Add gesture-based navigation for a more interactive feel.  
 - Enhance animations with more fluid effects.
-- To use flex and dynamic styling
+- To use flexbox and dynamic styling
